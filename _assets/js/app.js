@@ -128,6 +128,85 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
     })
+
+    const images = [
+      "_assets/img/gallery/1.jpeg",
+      "_assets/img/gallery/2.jpeg",
+      "_assets/img/gallery/3.jpeg",
+      "_assets/img/gallery/4.jpeg",
+      "_assets/img/gallery/5.jpeg",
+      "_assets/img/gallery/6.jpeg",
+      "_assets/img/gallery/7.jpeg",
+      "_assets/img/gallery/8.jpeg",
+      "_assets/img/gallery/9.jpeg",
+    ];
+
+    const slider = document.getElementById("slider");
+    
+    let slides = [];
+    let current = 0;
+
+    function renderSlides() {
+      images.forEach((src, index) => {
+        const slide = document.createElement("div");
+        slide.className = "slide";
+        slide.style.transform = `translate3d(${(index - current) * 20}%, 0, ${Math.abs(index - current) * -100}px)`;
+        slide.style.opacity = index === current ? 1 : 0.4;
+
+        const img = document.createElement("img");
+        img.src = src;
+
+        slide.appendChild(img);
+        slider.appendChild(slide);
+        slides.push(slide);
+      });
+      updateSlides();
+    }
+
+    function updateSlides() {
+      slides.forEach((slide, index) => {
+        const offset = (index - current + images.length) % images.length;
+        let translateX = 0;
+        let zIndex = 0;
+        let opacity = 0.3;
+
+        if (offset === 0) {
+          translateX = 0;
+          zIndex = 3;
+          opacity = 1;
+        } else if (offset === 1 || offset === -images.length + 1) {
+          translateX = 20;
+          zIndex = 2;
+          opacity = 0.9;
+        } else if (offset === 2 || offset === -images.length + 2) {
+          translateX = 40;
+          zIndex = 1;
+          opacity = 0.7;
+        } else if (offset === images.length - 1) {
+          translateX = -20;
+          zIndex = 2;
+          opacity = 0.9;
+        } else if (offset === images.length - 2) {
+          translateX = -40;
+          zIndex = 1;
+          opacity = 0.7;
+        } else {
+          opacity = 0;
+        }
+
+        slide.style.transform = `translate3d(${translateX}%, 0, ${-Math.abs(translateX) * 5}px)`;
+        slide.style.zIndex = zIndex;
+        slide.style.opacity = opacity;
+      });
+    }
+
+    function autoplay() {
+      current = (current + 1) % images.length;
+      updateSlides();
+    }
+
+    renderSlides();
+    setInterval(autoplay, 3000);
     
     getData();
 });
