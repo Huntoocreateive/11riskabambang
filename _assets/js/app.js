@@ -139,6 +139,10 @@ document.addEventListener('DOMContentLoaded', function() {
       "_assets/img/gallery/7.jpeg",
       "_assets/img/gallery/8.jpeg",
       "_assets/img/gallery/9.jpeg",
+      "_assets/img/gallery/10.jpeg",
+      "_assets/img/gallery/11.jpeg",
+      "_assets/img/gallery/12.jpeg",
+      "_assets/img/gallery/13.jpeg",
     ];
 
     const slider = document.getElementById("slider");
